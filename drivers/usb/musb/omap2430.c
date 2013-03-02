@@ -380,8 +380,13 @@ static int omap2430_musb_init(struct musb *musb)
 
 	status = pm_runtime_get_sync(dev);
 	if (status < 0) {
+<<<<<<< HEAD
 		dev_err(dev, "pm_runtime_get_sync FAILED");
 		goto err2;
+=======
+		dev_err(dev, "pm_runtime_get_sync FAILED %d\n", status);
+		goto err1;
+>>>>>>> 20f3d0b9f976b3fb24b93457737f4090f23720b1
 	}
 
 	/* Set OTG_INTERFSEL to ULPI for correct charger detection.
@@ -539,13 +544,13 @@ static int __init omap2430_probe(struct platform_device *pdev)
 		goto err2;
 	}
 
+	pm_runtime_enable(&pdev->dev);
+
 	ret = platform_device_add(musb);
 	if (ret) {
 		dev_err(&pdev->dev, "failed to register musb device\n");
 		goto err2;
 	}
-
-	pm_runtime_enable(&pdev->dev);
 
 	return 0;
 
